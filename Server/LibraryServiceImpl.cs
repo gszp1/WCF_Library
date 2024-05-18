@@ -7,11 +7,12 @@ namespace Server
     public class LibraryServiceImpl : ILibraryService
     {
 
-        private Dictionary<int, BookInfo> books;
+        private readonly Dictionary<int, BookInfo> books;
 
-        public LibraryServiceImpl(Dictionary<int, BookInfo> books)
+        public LibraryServiceImpl()
         {
-            this.books = books;
+            books = new Dictionary<int, BookInfo>();
+            PopulateDictionary(books);
         }
 
         public int[] FindBooks(string keyword)
@@ -44,6 +45,27 @@ namespace Server
             {
                 return null;
             }
+        }
+
+        public void PopulateDictionary(Dictionary<int, BookInfo> booksDictionary)
+        {
+
+            AuthorInfo[] authors =
+            {
+                new AuthorInfo{firstName = "name1", lastName = "surname1"},
+                new AuthorInfo{firstName = "name2", lastName = "surname2"},
+                new AuthorInfo{firstName = "name3", lastName = "surname3"},
+                new AuthorInfo{firstName = "name4", lastName = "surname4"},
+                new AuthorInfo{firstName = "name5", lastName = "surname5"},
+                new AuthorInfo{firstName = "name6", lastName = "surname6"}
+            };
+
+            int identifier = 0;
+            booksDictionary.Add(identifier++, new BookInfo { title = "Book1", authors = new AuthorInfo[] { authors[0], authors[1] } });
+            booksDictionary.Add(identifier++, new BookInfo { title = "Book2", authors = new AuthorInfo[] { authors[2], authors[3] } });
+            booksDictionary.Add(identifier++, new BookInfo { title = "Book3", authors = new AuthorInfo[] { authors[4], authors[5] } });
+            booksDictionary.Add(identifier++, new BookInfo { title = "Book4", authors = new AuthorInfo[] { authors[3] } });
+            booksDictionary.Add(identifier++, new BookInfo { title = "Book5", authors = new AuthorInfo[] { authors[1] } });
         }
     }
 }
