@@ -61,11 +61,41 @@ namespace Server
             };
 
             int identifier = 0;
-            booksDictionary.Add(identifier++, new BookInfo { title = "Book1", authors = new AuthorInfo[] { authors[0], authors[1] } });
-            booksDictionary.Add(identifier++, new BookInfo { title = "Book2", authors = new AuthorInfo[] { authors[2], authors[3] } });
-            booksDictionary.Add(identifier++, new BookInfo { title = "Book3", authors = new AuthorInfo[] { authors[4], authors[5] } });
-            booksDictionary.Add(identifier++, new BookInfo { title = "Book4", authors = new AuthorInfo[] { authors[3] } });
-            booksDictionary.Add(identifier++, new BookInfo { title = "Book5", authors = new AuthorInfo[] { authors[1] } });
+            booksDictionary.Add(
+                identifier++,
+                new BookInfo {
+                    title = "Book1",
+                    authors = new AuthorInfo[] { authors[0], authors[1] } 
+                }
+            );
+            booksDictionary.Add(
+                identifier++,
+                new BookInfo {
+                    title = "Book2",
+                    authors = new AuthorInfo[] { authors[2], authors[3] }
+                }
+            );
+            booksDictionary.Add(
+                identifier++,
+                new BookInfo {
+                    title = "Book3",
+                    authors = new AuthorInfo[] { authors[4], authors[5] }
+                }
+            );
+            booksDictionary.Add(
+                identifier++,
+                new BookInfo {
+                    title = "Book4",
+                    authors = new AuthorInfo[] { authors[3] }
+                }
+            );
+            booksDictionary.Add(
+                identifier++,
+                new BookInfo {
+                    title = "Book5",
+                    authors = new AuthorInfo[] { authors[1] } 
+                }
+            );
         }
     }
 }
