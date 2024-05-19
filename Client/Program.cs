@@ -11,14 +11,17 @@ namespace Client
         static void Main(string[] args)
         {
             // Read Uniform Resource Identifier from configuration.
-            string uriString = string.Format(
-                "net.tcp://{0}:{1}/{2}",
-                ConfigurationManager.AppSettings["ServiceAddress"],
-                ConfigurationManager.AppSettings["ServicePort"],
-                ConfigurationManager.AppSettings["ServiceName"]
-            );
-            Console.WriteLine($"Used uri: {uriString}");
-            Uri uri = new Uri(uriString);
+            Uri uri;
+            try
+            {
+                uri = ReadConfigurationURI();
+            }
+            catch
+            {
+                Console.WriteLine("Provided configuration parameters are invalid.");
+                return;
+            }
+            Console.WriteLine($"Used URI: {uri}");
 
             // Establish connection with service.
             NetTcpBinding binding = new NetTcpBinding(SecurityMode.None);
@@ -112,6 +115,16 @@ namespace Client
             catch (Exception ex) when (ex is CommunicationException | ex is TimeoutException) {
                 Console.WriteLine("Connection with service close. Terminating program.");
             }
+        }
+        private static Uri ReadConfigurationURI()
+        {
+            string uriString = string.Format(
+                "net.tcp://{0}:{1}/{2}",
+                ConfigurationManager.AppSettings["ServiceAddress"],
+                ConfigurationManager.AppSettings["ServicePort"],
+                ConfigurationManager.AppSettings["ServiceName"]
+            );
+            return new Uri(uriString);
         }
     }
 }
