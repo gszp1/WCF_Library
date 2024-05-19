@@ -36,66 +36,72 @@ namespace Client
             bool running = true;
             //variables for storing service outputs
             int[] bookIdentifiers = null;
-            BookInfo bookInf = null ;
-            while (running)
-            {   
-                Console.WriteLine(operationString);
-                command = Console.ReadLine();
-                switch(command.ToLower())
+            BookInfo bookInf = null;
+            try {
+                while (running)
                 {
-                    case "1": // find books with keyword in title.
-                        Console.WriteLine("Enter keyword: ");
-                        string keyword = Console.ReadLine();
-                        bookIdentifiers = proxy.FindBooks(keyword);
-                        if (bookIdentifiers.Length == 0)
-                        {
-                            Console.WriteLine("No books with given keyword in title.");
+                    Console.WriteLine(operationString);
+                    command = Console.ReadLine();
+                    switch (command.ToLower())
+                    {
+                        case "1": // find books with keyword in title.
+                            Console.WriteLine("Enter keyword: ");
+                            string keyword = Console.ReadLine();
+                            bookIdentifiers = proxy.FindBooks(keyword);
+                            if (bookIdentifiers.Length == 0)
+                            {
+                                Console.WriteLine("No books with given keyword in title.");
+                                break;
+                            }
+                            Console.WriteLine("Found identifiers: ");
+                            int count = 0;
+                            foreach (var bookId in bookIdentifiers)
+                            {
+                                if (count == 10)
+                                {
+                                    Console.WriteLine();
+                                    count = 0;
+                                }
+                                Console.Write($"{bookId} ");
+                            }
+                            Console.WriteLine();
                             break;
-                        }
-                        Console.WriteLine("Found identifiers: ");
-                        int count = 0;
-                        foreach(var bookId in bookIdentifiers)
-                        {
-                            if (count == 10)
+                        case "2": // find book with given identifier.
+                            try
                             {
-                                Console.WriteLine();
-                                count = 0;
+                                Console.WriteLine("Enter identifier: ");
+                                int identifier = Convert.ToInt32(Console.ReadLine());
+                                bookInf = proxy.GetBookInfo(identifier);
+                                Console.WriteLine($"Book details:\nTitle: {bookInf.title}");
+                                int counter = 1;
+                                foreach (AuthorInfo author in bookInf.authors)
+                                {
+                                    Console.WriteLine($"Author {counter++}: {author.firstName} {author.lastName}");
+                                }
                             }
-                            Console.Write($"{bookId} ");
-                        }
-                        Console.WriteLine();
-                        break;
-                    case "2": // find book with given identifier.
-                        try
-                        {
-                            Console.WriteLine("Enter identifier: ");
-                            int identifier = Convert.ToInt32(Console.ReadLine());
-                            bookInf = proxy.GetBookInfo(identifier);
-                            Console.WriteLine($"Book details:\nTitle: {bookInf.title}");
-                            int counter = 1;
-                            foreach (AuthorInfo author in bookInf.authors)
+                            catch (Exception ex) when (ex is FormatException || ex is OverflowException)
                             {
-                                Console.WriteLine($"Author {counter++}: {author.firstName} {author.lastName}");
+                                Console.WriteLine("Invalid identifier.");
                             }
-                        }
-                        catch (Exception ex) when (ex is FormatException || ex is OverflowException)
-                        {
-                            Console.WriteLine("Invalid identifier.");
-                        }
-                        catch (FaultException<BookNotFound> bookEx)
-                        {
-                            Console.WriteLine(bookEx.Message);
-                        }
-                        break;
-                    case "q": // Exit.
-                        running = false;
-                        Console.WriteLine("Exiting.");
-                        break;
-                    default: // Wrong option.
-                        Console.WriteLine("Chosen option does not exist.");
-                        break;
+                            catch (FaultException<BookNotFound> bookEx)
+                            {
+                                Console.WriteLine(bookEx.Message);
+                            }
+                            break;
+                        case "q": // Exit.
+                            running = false;
+                            Console.WriteLine("Exiting.");
+                            break;
+                        default: // Wrong option.
+                            Console.WriteLine("Chosen option does not exist.");
+                            break;
+                    }
                 }
             }
+            catch (CommunicationException) {
+                Console.WriteLine("Connection with service close. Terminating program.");
+            }
         }
+
     }
 }
