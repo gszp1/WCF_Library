@@ -43,15 +43,27 @@ namespace Client
                 command = Console.ReadLine();
                 switch(command.ToLower())
                 {
-                    case "1":
+                    case "1": // find books with keyword in title.
+                        Console.WriteLine("Enter keyword: ");
+                        string keyword = Console.ReadLine();
+                        
                         break;
-                    case "2":
+                    case "2": // find book with given identifier.
+                        try
+                        {
+                            Console.WriteLine("Enter identifier: ");
+                            int identifier = Convert.ToInt32(Console.ReadLine());
+                        }
+                        catch (Exception ex) when (ex is FormatException || ex is OverflowException)
+                        {
+                            Console.WriteLine("Invalid identifier.");
+                        }
                         break;
-                    case "q":
+                    case "q": // Exit.
                         running = false;
                         Console.WriteLine("Exiting.");
                         break;
-                    default:
+                    default: // Wrong option.
                         Console.WriteLine("Chosen option does not exist.");
                         break;
                 }
