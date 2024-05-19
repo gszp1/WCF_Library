@@ -45,7 +45,7 @@ namespace Client
             bool running = true;
             //variables for storing service outputs
             int[] bookIdentifiers = null;
-            BookInfo bookInf = null;
+            BookInfo bookInformation = null;
             try {
                 while (running)
                 {
@@ -63,36 +63,26 @@ namespace Client
                                 break;
                             }
                             Console.WriteLine("Found identifiers: ");
-                            int count = 0;
-                            foreach (var bookId in bookIdentifiers)
-                            {
-                                if (count == 10)
-                                {
-                                    Console.WriteLine();
-                                    count = 0;
-                                }
-                                Console.Write($"{bookId} ");
-                            }
-                            Console.WriteLine();
+                            Console.WriteLine(string.Join(" ", bookIdentifiers));
                             break;
                         case "2": // find book with given identifier.
                             try
                             {
                                 Console.WriteLine("Enter identifier: ");
                                 int identifier = Convert.ToInt32(Console.ReadLine());
-                                bookInf = proxy.GetBookInfo(identifier);
-                                Console.WriteLine($"Book details:\nTitle: {bookInf.title}");
+                                bookInformation = proxy.GetBookInfo(identifier);
+                                Console.WriteLine($"Book details:\nTitle: {bookInformation.title}");
                                 int counter = 1;
-                                foreach (AuthorInfo author in bookInf.authors)
+                                foreach (AuthorInfo author in bookInformation.authors)
                                 {
                                     Console.WriteLine($"Author {counter++}: {author.firstName} {author.lastName}");
                                 }
                             }
-                            catch (FormatException FEx)
+                            catch (FormatException)
                             {
                                 Console.WriteLine("Invalid identifier format.");
                             }
-                            catch (OverflowException OEx)
+                            catch (OverflowException)
                             {
                                 Console.WriteLine("Identifier is outside defined boundary.");
                             }
@@ -115,6 +105,5 @@ namespace Client
                 Console.WriteLine("Connection with service close. Terminating program.");
             }
         }
-
     }
 }
