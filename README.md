@@ -1,15 +1,22 @@
 # WCF-Library #
 
+## Used technologies ##
+
+1. .NET Framework 4.8
+2. Windows Communication Foundation
+
 ## Description ##
-Należy zrealizować usługę pozwalająca na:
 
-- wyszukiwanie książki na podstawie słowa w tytule. Metoda usługi przyjmuje jako argument łańcuch tekstowy i zwraca listé identyfikatorów książkiek typu integer
+The goal of this project is to implement a library service that will allow connected clients to:
 
-- pobieranie szczegółów książki. Metoda przyjmuje jako argument identyfikator książki typu integer i zwraca strukturę zawierającą tytuł i listę autorów (lista struktur: imię, nazwisko). W przypadku niepoprawnego identyfikatora usługa zgłasza błąd (należy zdefiniować klasę dla kontrkatu błędów)
-
-Usługa może mieć predefiniowaną listę kilku książek. Klient w fromie aplikacji konsolowej powinien wykonywać przykładowe operacje, wyświetlać szczegóły odnalezionych książek i poprawnie obsługiwać błędy.
+1. Get identifiers of books that have provided keyword in title.
+2. Get details of book with provided identifier.
 
 ## Specifications ##
+
+- Connection configuration for both client and server are stored in App.Config files.
+- Connection between client and server is established via TCP.
+- Project consists of three sub-projects: WCFService Library and two Console projects.
 
 ### LibraryService (WCFService) ###
 
