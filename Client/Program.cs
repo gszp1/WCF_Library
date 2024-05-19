@@ -65,6 +65,9 @@ namespace Client
             }
             catch (Exception ex) when (ex is CommunicationException | ex is TimeoutException) {
                 Console.WriteLine("Connection with service close. Terminating program.");
+            } finally
+            {
+                closeProxy(proxy);
             }
         }
 
@@ -72,6 +75,7 @@ namespace Client
         {
             // Read Uniform Resource Identifier from configuration.
             Uri uri = ReadConfigurationURI();
+            Console.WriteLine($"Used URI: {uri}");
 
             // Establish connection with service.
             NetTcpBinding binding = new NetTcpBinding(SecurityMode.None);
@@ -153,6 +157,22 @@ namespace Client
             {
                 Console.WriteLine(bookEx.Message);
                 return null;
+            }
+        }
+
+        private static void closeProxy(ILibraryService proxy)
+        {
+            if (proxy is ICommunicationObject communicationObject)
+            {
+                try
+                {
+                    // Close proxy gracefully (Allow operations to finish first).
+                    communicationObject.Close();
+                } catch
+                {
+                    // Force closing proxy if exception is thrown.
+                    communicationObject.Abort();
+                }
             }
         }
     }
