@@ -14,12 +14,12 @@ namespace Server
         static void Main(string[] args)
         {
             // get Uniform Resource Identifier from configuration
-            string uriString = "net.tcp://" +
-                ConfigurationManager.AppSettings["Address"] +
-                ":" +
-                ConfigurationManager.AppSettings["Port"] +
-                "/" +
-                ConfigurationManager.AppSettings["ServiceName"];
+            string uriString = string.Format(
+                "net.tcp://{0}:{1}/{2}",
+                ConfigurationManager.AppSettings["Address"],
+                ConfigurationManager.AppSettings["Port"],
+                ConfigurationManager.AppSettings["ServiceName"]
+            );
             Uri uri = new Uri(uriString);
             Console.WriteLine("Used URI: " + uriString); // display URI
 
