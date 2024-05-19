@@ -11,28 +11,15 @@ namespace Client
         static void Main(string[] args)
         {
             // Read Uniform Resource Identifier from configuration.
-            Uri uri;
+            ILibraryService proxy;
             try
             {
-                uri = ReadConfigurationURI();
+                proxy = connectToService();
             }
-            catch
+            catch (UriFormatException)
             {
                 Console.WriteLine("Provided configuration parameters are invalid.");
                 return;
-            }
-            Console.WriteLine($"Used URI: {uri}");
-
-            // Establish connection with service.
-            NetTcpBinding binding = new NetTcpBinding(SecurityMode.None);
-            var channel = new ChannelFactory<ILibraryService>(binding);
-            var endpoint = new EndpointAddress(uri);
-            
-            // Create proxy.
-            var proxy = channel.CreateChannel(endpoint);
-            try
-            {
-                proxy.GetBookInfo(0);
             }
             catch (Exception ex) when (ex is CommunicationException | ex is TimeoutException)
             {
@@ -81,6 +68,36 @@ namespace Client
             }
         }
 
+        public static ILibraryService connectToService()
+        {
+            // Read Uniform Resource Identifier from configuration.
+            Uri uri = ReadConfigurationURI();
+
+            // Establish connection with service.
+            NetTcpBinding binding = new NetTcpBinding(SecurityMode.None);
+            var channel = new ChannelFactory<ILibraryService>(binding);
+            var endpoint = new EndpointAddress(uri);
+
+            // Create proxy.
+            var proxy = channel.CreateChannel(endpoint);
+
+            // Call proxy operation to check if connection was successfully established
+            proxy.GetBookInfo(0);
+
+            return proxy;
+        }
+
+        private static Uri ReadConfigurationURI()
+        {
+            string uriString = string.Format(
+                "net.tcp://{0}:{1}/{2}",
+                ConfigurationManager.AppSettings["ServiceAddress"],
+                ConfigurationManager.AppSettings["ServicePort"],
+                ConfigurationManager.AppSettings["ServiceName"]
+            );
+            return new Uri(uriString);
+        }
+
         private static int[] getBooksIdentifiers(ILibraryService proxy)
         {
             Console.WriteLine("Enter keyword: ");
@@ -125,17 +142,6 @@ namespace Client
                 Console.WriteLine(bookEx.Message);
                 return null;
             }
-        }
-
-        private static Uri ReadConfigurationURI()
-        {
-            string uriString = string.Format(
-                "net.tcp://{0}:{1}/{2}",
-                ConfigurationManager.AppSettings["ServiceAddress"],
-                ConfigurationManager.AppSettings["ServicePort"],
-                ConfigurationManager.AppSettings["ServiceName"]
-            );
-            return new Uri(uriString);
         }
     }
 }
