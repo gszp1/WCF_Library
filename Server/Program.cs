@@ -47,7 +47,8 @@ namespace Server
         {
             // Read configuration from App.Config
             string uriString = string.Format(
-                "net.tcp://{0}:{1}/{2}",
+                "{0}://{1}:{2}/{3}",
+                ConfigurationManager.AppSettings["Protocol"],
                 ConfigurationManager.AppSettings["Address"],
                 ConfigurationManager.AppSettings["Port"],
                 ConfigurationManager.AppSettings["ServiceName"]

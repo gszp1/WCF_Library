@@ -14,7 +14,7 @@ namespace Client
             ILibraryService proxy;
             try
             {
-                proxy = connectToService();
+                proxy = ConnectToService();
             }
             catch (UriFormatException)
             {
@@ -71,7 +71,7 @@ namespace Client
             }
         }
 
-        public static ILibraryService connectToService()
+        public static ILibraryService ConnectToService()
         {
             // Read Uniform Resource Identifier from configuration.
             Uri uri = ReadConfigurationURI();
@@ -95,7 +95,8 @@ namespace Client
         {
             // Read configuration from App.Config
             string uriString = string.Format(
-                "net.tcp://{0}:{1}/{2}",
+                "{0}://{1}:{2}/{3}",
+                ConfigurationManager.AppSettings["Protocol"],
                 ConfigurationManager.AppSettings["ServiceAddress"],
                 ConfigurationManager.AppSettings["ServicePort"],
                 ConfigurationManager.AppSettings["ServiceName"]
