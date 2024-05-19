@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using LibraryService.DataContracts;
 using LibraryService.ServiceContracts;
@@ -53,7 +54,6 @@ namespace Server
 
         public void PopulateDictionary(Dictionary<int, BookInfo> booksDictionary)
         {
-
             AuthorInfo[] authors =
             {
                 new AuthorInfo{firstName = "name1", lastName = "surname1"},

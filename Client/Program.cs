@@ -23,6 +23,15 @@ namespace Client
             var channel = new ChannelFactory<ILibraryService>(binding);
             var endpoint = new EndpointAddress(uri);
             var proxy = channel.CreateChannel(endpoint);
+            try
+            {
+                proxy.GetBookInfo(0);
+            }
+            catch (Exception ex) when (ex is CommunicationException | ex is TimeoutException)
+            {
+                Console.WriteLine("Failed to connect with service.");
+                return;
+            }
             Console.WriteLine("Created Proxy.");
 
             // String with available user operations
