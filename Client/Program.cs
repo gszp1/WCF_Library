@@ -41,17 +41,14 @@ namespace Client
             }
             Console.WriteLine("Connecting to service successful. Proxy created.");
 
-            // String with available user operations
-            string operationString = 
+            // program control variables
+            bool running = true;
+            string operationString =
                 "Choose operation:\n" +
                 "1.| Find books with keyword in title.\n" +
                 "2.| Find book with given identifier.\n" +
                 "q.| Quit.";
-            
-            // buffer for program flow control
-            string command = "";
-            bool running = true;
-            
+
             // variables for storing service outputs
             int[] bookIdentifiers = null;
             BookInfo bookInformation = null;
@@ -61,8 +58,7 @@ namespace Client
                 while (running)
                 {
                     Console.WriteLine(operationString);
-                    command = Console.ReadLine();
-                    switch (command.ToLower())
+                    switch (Console.ReadLine())
                     {
                         case "1": // find books with keyword in title.
                             bookIdentifiers = getBooksIdentifiers(proxy);
@@ -75,7 +71,7 @@ namespace Client
                             Console.WriteLine("Exiting.");
                             break;
                         default: // Wrong option.
-                            Console.WriteLine("Chosen option does not exist.");
+                            Console.WriteLine("Chosen operation does not exist.");
                             break;
                     }
                 }
