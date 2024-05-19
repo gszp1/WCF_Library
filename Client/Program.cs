@@ -19,11 +19,11 @@ namespace Client
             Console.WriteLine($"Used uri: {uriString}");
             Uri uri = new Uri(uriString);
 
-            //NetTcpBinding binding = new NetTcpBinding(SecurityMode.None);
-            //var channel = new ChannelFactory<ILibraryService>(binding);
-            //var endpoint = new EndpointAddress(uri);
-            //var proxy = channel.CreateChannel(endpoint);
-            //Console.WriteLine("Created Proxy.");
+            NetTcpBinding binding = new NetTcpBinding(SecurityMode.None);
+            var channel = new ChannelFactory<ILibraryService>(binding);
+            var endpoint = new EndpointAddress(uri);
+            var proxy = channel.CreateChannel(endpoint);
+            Console.WriteLine("Created Proxy.");
 
             // String with available user operations
             string operationString = 
@@ -46,13 +46,40 @@ namespace Client
                     case "1": // find books with keyword in title.
                         Console.WriteLine("Enter keyword: ");
                         string keyword = Console.ReadLine();
-                        
+                        bookIdentifiers = proxy.FindBooks(keyword);
+                        if (bookIdentifiers.Length == 0)
+                        {
+                            Console.WriteLine("No books with given keyword in title.");
+                        }
+                        Console.WriteLine("Found identifiers: ");
+                        int count = 0;
+                        foreach(var bookId in bookIdentifiers)
+                        {
+                            if (count == 10)
+                            {
+                                Console.WriteLine();
+                                count = 0;
+                            }
+                            Console.Write($"{bookId} ");
+                        }
+                        Console.WriteLine();
                         break;
                     case "2": // find book with given identifier.
                         try
                         {
                             Console.WriteLine("Enter identifier: ");
                             int identifier = Convert.ToInt32(Console.ReadLine());
+                            bookInf = proxy.GetBookInfo(identifier);
+                            Console.WriteLine($"Book details:\nTitle: {bookInf.title}\nAuthors:");
+                            int counter = 1;
+                            if(bookInf == null)
+                            {
+                                break;
+                            }
+                            foreach (AuthorInfo author in bookInf.authors)
+                            {
+                                Console.WriteLine($"Author {counter++}: {author.firstName} {author.lastName}");
+                            }
                         }
                         catch (Exception ex) when (ex is FormatException || ex is OverflowException)
                         {
