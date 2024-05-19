@@ -64,7 +64,7 @@ namespace Client
                 }
             }
             catch (Exception ex) when (ex is CommunicationException | ex is TimeoutException) {
-                Console.WriteLine("Connection with service close. Terminating program.");
+                Console.WriteLine("Connection with service closed. Terminating program.");
             } finally
             {
                 CloseProxy(proxy);

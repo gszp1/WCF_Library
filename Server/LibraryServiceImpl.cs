@@ -7,6 +7,7 @@ using LibraryService.ServiceContracts;
 
 namespace Server
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class LibraryServiceImpl : ILibraryService
     {
 
@@ -20,7 +21,7 @@ namespace Server
 
         public int[] FindBooks(string keyword)
         {
-            if (keyword == null)
+            if (keyword == null || keyword.Equals("") )
             {
                 return new int[0];
             }
