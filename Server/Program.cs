@@ -9,7 +9,7 @@ namespace Server
     {
         static void Main(string[] args)
         {
-            // get Uniform Resource Identifier from configuration
+            // get Uniform Resource Identifier from configuration.
             string uriString = string.Format(
                 "net.tcp://{0}:{1}/{2}",
                 ConfigurationManager.AppSettings["Address"],
@@ -17,8 +17,9 @@ namespace Server
                 ConfigurationManager.AppSettings["ServiceName"]
             );
             Uri uri = new Uri(uriString);
-            Console.WriteLine("Used URI: " + uriString); // display URI
+            Console.WriteLine("Used URI: " + uriString);
 
+            // Start service.
             ServiceHost host = new ServiceHost(typeof(LibraryServiceImpl), uri);
             try
             {
@@ -27,7 +28,7 @@ namespace Server
                 host.Opened += Host_Opened;
                 host.Closed += Host_Closed;
                 host.Open();
-                Console.WriteLine("Enter q to exit");
+                Console.WriteLine("Library Service is running.\nEnter q to exit");
                 while(Console.ReadLine().ToLower().Equals("q") == false);
                 host.Close();
             }

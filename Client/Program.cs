@@ -10,6 +10,7 @@ namespace Client
     {
         static void Main(string[] args)
         {
+            // Read Uniform Resource Identifier from configuration.
             string uriString = string.Format(
                 "net.tcp://{0}:{1}/{2}",
                 ConfigurationManager.AppSettings["ServiceAddress"],
@@ -19,9 +20,12 @@ namespace Client
             Console.WriteLine($"Used uri: {uriString}");
             Uri uri = new Uri(uriString);
 
+            // Establish connection with service.
             NetTcpBinding binding = new NetTcpBinding(SecurityMode.None);
             var channel = new ChannelFactory<ILibraryService>(binding);
             var endpoint = new EndpointAddress(uri);
+            
+            // Create proxy.
             var proxy = channel.CreateChannel(endpoint);
             try
             {
@@ -40,12 +44,16 @@ namespace Client
                 "1.| Find books with keyword in title.\n" +
                 "2.| Find book with given identifier.\n" +
                 "q.| Quit.";
+            
             // buffer for program flow control
             string command = "";
             bool running = true;
-            //variables for storing service outputs
+            
+            // variables for storing service outputs
             int[] bookIdentifiers = null;
             BookInfo bookInformation = null;
+            
+            // Main program loop.
             try {
                 while (running)
                 {
