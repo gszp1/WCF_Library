@@ -98,7 +98,7 @@ namespace Client
                     }
                 }
             }
-            catch (CommunicationException) {
+            catch (Exception ex) when (ex is CommunicationException | ex is TimeoutException) {
                 Console.WriteLine("Connection with service close. Terminating program.");
             }
         }
