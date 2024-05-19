@@ -10,7 +10,7 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            // Read Uniform Resource Identifier from configuration.
+            // Connect with service.
             ILibraryService proxy;
             try
             {
@@ -48,10 +48,10 @@ namespace Client
                     switch (Console.ReadLine())
                     {
                         case "1": // find books with keyword in title.
-                            bookIdentifiers = getBooksIdentifiers(proxy);
+                            bookIdentifiers = GetBooksIdentifiers(proxy);
                             break;
                         case "2": // find book with given identifier.
-                            bookInformation = getBookInformation(proxy);
+                            bookInformation = GetBookInformation(proxy);
                             break;
                         case "q": // Exit.
                             running = false;
@@ -89,6 +89,7 @@ namespace Client
 
         private static Uri ReadConfigurationURI()
         {
+            // Read configuration from App.Config
             string uriString = string.Format(
                 "net.tcp://{0}:{1}/{2}",
                 ConfigurationManager.AppSettings["ServiceAddress"],
@@ -98,27 +99,38 @@ namespace Client
             return new Uri(uriString);
         }
 
-        private static int[] getBooksIdentifiers(ILibraryService proxy)
+        private static int[] GetBooksIdentifiers(ILibraryService proxy)
         {
+            // Get keyword from user.
             Console.WriteLine("Enter keyword: ");
             string keyword = Console.ReadLine();
+
+            // Get identifiers from service.
             int[] bookIdentifiers = proxy.FindBooks(keyword);
+
+            // Display identifiers.
             if (bookIdentifiers.Length == 0)
             {
                 Console.WriteLine("No books with given keyword in title.");
                 return new int[0];
             }
             Console.WriteLine($"Found identifiers:\n{string.Join(" ", bookIdentifiers)}");
+            
             return bookIdentifiers;
         }
 
-        private static BookInfo getBookInformation(ILibraryService proxy)
+        private static BookInfo GetBookInformation(ILibraryService proxy)
         {
             try
             {
+                // Read identifier from user.
                 Console.WriteLine("Enter identifier: ");
                 int identifier = Convert.ToInt32(Console.ReadLine());
+
+                // Get book details from service.
                 BookInfo bookInformation = proxy.GetBookInfo(identifier);
+
+                // Display book details.
                 Console.WriteLine($"Book details:\nTitle: {bookInformation.title}");
                 int counter = 1;
                 foreach (AuthorInfo author in bookInformation.authors)

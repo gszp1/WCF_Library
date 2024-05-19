@@ -31,6 +31,7 @@ namespace Server
                 host.Opened += Host_Opened;
                 host.Closed += Host_Closed;
                 host.Open();
+                
                 Console.WriteLine("Enter q to exit");
                 while(Console.ReadLine().ToLower().Equals("q") == false);
                 host.Close();
@@ -44,6 +45,7 @@ namespace Server
 
         private static Uri ReadConfigurationURI()
         {
+            // Read configuration from App.Config
             string uriString = string.Format(
                 "net.tcp://{0}:{1}/{2}",
                 ConfigurationManager.AppSettings["Address"],
