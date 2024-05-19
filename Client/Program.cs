@@ -107,9 +107,14 @@ namespace Client
 
             // Get identifiers from service.
             int[] bookIdentifiers = proxy.FindBooks(keyword);
-
+            
             // Display identifiers.
-            if (bookIdentifiers.Length == 0)
+            if (bookIdentifiers == null)
+            {
+                Console.WriteLine("No books with given keyword in title.");
+                return new int[0];
+            }
+            else if (bookIdentifiers.Length == 0)
             {
                 Console.WriteLine("No books with given keyword in title.");
                 return new int[0];
