@@ -67,7 +67,7 @@ namespace Client
                 Console.WriteLine("Connection with service close. Terminating program.");
             } finally
             {
-                closeProxy(proxy);
+                CloseProxy(proxy);
             }
         }
 
@@ -160,7 +160,7 @@ namespace Client
             }
         }
 
-        private static void closeProxy(ILibraryService proxy)
+        private static void CloseProxy(ILibraryService proxy)
         {
             if (proxy is ICommunicationObject communicationObject)
             {
