@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryService.ServiceContracts;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -13,16 +14,33 @@ namespace Server
         static void Main(string[] args)
         {
             // get Uniform Resource Identifier from configuration
-            string uriString = "http://" +
+            string uriString = "net.tcp://" +
                 ConfigurationManager.AppSettings["Address"] +
                 ":" +
                 ConfigurationManager.AppSettings["Port"] +
                 "/" +
                 ConfigurationManager.AppSettings["ServiceName"];
             Uri uri = new Uri(uriString);
-            Console.WriteLine(uriString); // display URI
+            Console.WriteLine("Used URI: " + uriString); // display URI
 
             ServiceHost host = new ServiceHost(typeof(LibraryServiceImpl), uri);
+            try
+            {
+                var binding = new NetTcpBinding(SecurityMode.None);
+                host.AddServiceEndpoint(typeof(ILibraryService), binding, "");
+                host.Opened += Host_Opened;
+                host.Open();
+                while (true) ;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error occurred during setup!\nAdditional info: ");
+                Console.WriteLine(ex.ToString());
+            }
+        }
+        private static void Host_Opened(object sender, EventArgs e)
+        {
+            Console.WriteLine("Started library service.");
         }
     }
 }
