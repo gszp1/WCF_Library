@@ -31,7 +31,7 @@ namespace Server
                 host.Opened += Host_Opened;
                 host.Closed += Host_Closed;
                 host.Open();
-                Console.WriteLine("Library Service is running.\nEnter q to exit");
+                Console.WriteLine("Enter q to exit");
                 while(Console.ReadLine().ToLower().Equals("q") == false);
                 host.Close();
             }

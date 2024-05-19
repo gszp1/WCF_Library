@@ -39,7 +39,7 @@ namespace Client
                 Console.WriteLine("Failed to connect with service.");
                 return;
             }
-            Console.WriteLine("Created Proxy.");
+            Console.WriteLine("Connecting to service successful. Proxy created.");
 
             // String with available user operations
             string operationString = 
@@ -65,42 +65,10 @@ namespace Client
                     switch (command.ToLower())
                     {
                         case "1": // find books with keyword in title.
-                            Console.WriteLine("Enter keyword: ");
-                            string keyword = Console.ReadLine();
-                            bookIdentifiers = proxy.FindBooks(keyword);
-                            if (bookIdentifiers.Length == 0)
-                            {
-                                Console.WriteLine("No books with given keyword in title.");
-                                break;
-                            }
-                            Console.WriteLine("Found identifiers: ");
-                            Console.WriteLine(string.Join(" ", bookIdentifiers));
+                            bookIdentifiers = getBooksIdentifiers(proxy);
                             break;
                         case "2": // find book with given identifier.
-                            try
-                            {
-                                Console.WriteLine("Enter identifier: ");
-                                int identifier = Convert.ToInt32(Console.ReadLine());
-                                bookInformation = proxy.GetBookInfo(identifier);
-                                Console.WriteLine($"Book details:\nTitle: {bookInformation.title}");
-                                int counter = 1;
-                                foreach (AuthorInfo author in bookInformation.authors)
-                                {
-                                    Console.WriteLine($"Author {counter++}: {author.firstName} {author.lastName}");
-                                }
-                            }
-                            catch (FormatException)
-                            {
-                                Console.WriteLine("Invalid identifier format.");
-                            }
-                            catch (OverflowException)
-                            {
-                                Console.WriteLine("Identifier is outside defined boundary.");
-                            }
-                            catch (FaultException<BookNotFound> bookEx)
-                            {
-                                Console.WriteLine(bookEx.Message);
-                            }
+                            bookInformation = getBookInformation(proxy);
                             break;
                         case "q": // Exit.
                             running = false;
@@ -116,6 +84,53 @@ namespace Client
                 Console.WriteLine("Connection with service close. Terminating program.");
             }
         }
+
+        private static int[] getBooksIdentifiers(ILibraryService proxy)
+        {
+            Console.WriteLine("Enter keyword: ");
+            string keyword = Console.ReadLine();
+            int[] bookIdentifiers = proxy.FindBooks(keyword);
+            if (bookIdentifiers.Length == 0)
+            {
+                Console.WriteLine("No books with given keyword in title.");
+                return new int[0];
+            }
+            Console.WriteLine($"Found identifiers:\n{string.Join(" ", bookIdentifiers)}");
+            return bookIdentifiers;
+        }
+
+        private static BookInfo getBookInformation(ILibraryService proxy)
+        {
+            try
+            {
+                Console.WriteLine("Enter identifier: ");
+                int identifier = Convert.ToInt32(Console.ReadLine());
+                BookInfo bookInformation = proxy.GetBookInfo(identifier);
+                Console.WriteLine($"Book details:\nTitle: {bookInformation.title}");
+                int counter = 1;
+                foreach (AuthorInfo author in bookInformation.authors)
+                {
+                    Console.WriteLine($"Author {counter++}: {author.firstName} {author.lastName}");
+                }
+                return bookInformation;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid identifier format.");
+                return null;
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("Identifier is outside defined boundary.");
+                return null;
+            }
+            catch (FaultException<BookNotFound> bookEx)
+            {
+                Console.WriteLine(bookEx.Message);
+                return null;
+            }
+        }
+
         private static Uri ReadConfigurationURI()
         {
             string uriString = string.Format(
