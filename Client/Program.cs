@@ -88,9 +88,13 @@ namespace Client
                                     Console.WriteLine($"Author {counter++}: {author.firstName} {author.lastName}");
                                 }
                             }
-                            catch (Exception ex) when (ex is FormatException || ex is OverflowException)
+                            catch (FormatException FEx)
                             {
-                                Console.WriteLine("Invalid identifier.");
+                                Console.WriteLine("Invalid identifier format.");
+                            }
+                            catch (OverflowException OEx)
+                            {
+                                Console.WriteLine("Identifier is outside defined boundary.");
                             }
                             catch (FaultException<BookNotFound> bookEx)
                             {
