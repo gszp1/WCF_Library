@@ -50,6 +50,7 @@ namespace Client
                         if (bookIdentifiers.Length == 0)
                         {
                             Console.WriteLine("No books with given keyword in title.");
+                            break;
                         }
                         Console.WriteLine("Found identifiers: ");
                         int count = 0;
@@ -70,12 +71,8 @@ namespace Client
                             Console.WriteLine("Enter identifier: ");
                             int identifier = Convert.ToInt32(Console.ReadLine());
                             bookInf = proxy.GetBookInfo(identifier);
-                            Console.WriteLine($"Book details:\nTitle: {bookInf.title}\nAuthors:");
+                            Console.WriteLine($"Book details:\nTitle: {bookInf.title}");
                             int counter = 1;
-                            if(bookInf == null)
-                            {
-                                break;
-                            }
                             foreach (AuthorInfo author in bookInf.authors)
                             {
                                 Console.WriteLine($"Author {counter++}: {author.firstName} {author.lastName}");
@@ -84,6 +81,10 @@ namespace Client
                         catch (Exception ex) when (ex is FormatException || ex is OverflowException)
                         {
                             Console.WriteLine("Invalid identifier.");
+                        }
+                        catch (FaultException<BookNotFound> bookEx)
+                        {
+                            Console.WriteLine(bookEx.Message);
                         }
                         break;
                     case "q": // Exit.

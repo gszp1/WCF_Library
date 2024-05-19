@@ -30,7 +30,8 @@ namespace Server
                 host.AddServiceEndpoint(typeof(ILibraryService), binding, "");
                 host.Opened += Host_Opened;
                 host.Open();
-                while (true) ;
+                Console.WriteLine("Enter q to exit");
+                while(Console.ReadLine().ToLower().Equals("q") == false);
             }
             catch (Exception ex)
             {

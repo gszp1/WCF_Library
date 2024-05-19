@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ServiceModel;
 using LibraryService.DataContracts;
 using LibraryService.ServiceContracts;
 
@@ -43,7 +44,10 @@ namespace Server
             }
             else
             {
-                return null;
+                throw new FaultException<BookNotFound>(
+                    new BookNotFound(bookID),
+                    new FaultReason("No book with given identifier")
+                );
             }
         }
 
