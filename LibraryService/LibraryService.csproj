@@ -47,13 +47,17 @@
     <Compile Include="DataContracts\AuthorInfo.cs" />
     <Compile Include="DataContracts\BookInfo.cs" />
     <Compile Include="DataContracts\BookNotFound.cs" />
+    <Compile Include="LibraryServiceImpl.cs" />
     <Compile Include="ServiceContracts\LibraryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Data\Authors.txt" />
+    <Content Include="Data\Books.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

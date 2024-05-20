@@ -6,7 +6,7 @@ using System.ServiceModel;
 using LibraryService.DataContracts;
 using LibraryService.ServiceContracts;
 
-namespace Server
+namespace LibraryService
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class LibraryServiceImpl : ILibraryService

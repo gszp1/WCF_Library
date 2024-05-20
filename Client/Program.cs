@@ -84,7 +84,6 @@ namespace Client
 
             // Create proxy.
             var proxy = channel.CreateChannel(endpoint);
-
             // Call proxy operation to check if connection was successfully established
             proxy.GetBookInfo(0);
 

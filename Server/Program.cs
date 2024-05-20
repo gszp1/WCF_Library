@@ -2,6 +2,7 @@
 using System;
 using System.Configuration;
 using System.ServiceModel;
+using LibraryService;
 
 namespace Server
 {
