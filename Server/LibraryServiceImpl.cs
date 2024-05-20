@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using LibraryService.DataContracts;
@@ -15,8 +16,7 @@ namespace Server
 
         public LibraryServiceImpl()
         {
-            books = new Dictionary<int, BookInfo>();
-            PopulateDictionary(books);
+            books = GetBooks(GetAuthors());
         }
 
         public int[] FindBooks(string keyword)
@@ -47,54 +47,70 @@ namespace Server
             }
         }
 
-        public void PopulateDictionary(Dictionary<int, BookInfo> booksDictionary)
+        private List<AuthorInfo> GetAuthors()
         {
-            AuthorInfo[] authors =
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..");
+            filePath = Path.Combine(filePath, "Data", "Authors.txt");
+            List <AuthorInfo> authors = new List<AuthorInfo>();
+            using (var reader = new StreamReader(filePath))
             {
-                new AuthorInfo{firstName = "name1", lastName = "surname1"},
-                new AuthorInfo{firstName = "name2", lastName = "surname2"},
-                new AuthorInfo{firstName = "name3", lastName = "surname3"},
-                new AuthorInfo{firstName = "name4", lastName = "surname4"},
-                new AuthorInfo{firstName = "name5", lastName = "surname5"},
-                new AuthorInfo{firstName = "name6", lastName = "surname6"}
-            };
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    var values = line.Split(';');
 
+                    if (values.Length == 2)
+                    {
+                        var author = new AuthorInfo
+                        {
+                            firstName = values[0].Trim(),
+                            lastName = values[1].Trim()
+                        };
+
+                        authors.Add(author);
+                    }
+                }
+            }
+
+            return authors;
+        }
+
+        private Dictionary<int, BookInfo> GetBooks(List<AuthorInfo> authors)
+        {
+            var books = new Dictionary<int, BookInfo>();
             int identifier = 0;
-            booksDictionary.Add(
-                identifier++,
-                new BookInfo {
-                    title = "Book1",
-                    authors = new AuthorInfo[] { authors[0], authors[1] } 
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..");
+            filePath = Path.Combine(filePath, "Data", "Books.txt");
+            using (var reader = new StreamReader(filePath))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    var values = line.Split(';');
+                    if (values.Length >= 1)
+                    {
+                        List<AuthorInfo> authorInfos = new List<AuthorInfo>();
+                        for (int i = 1; i < values.Length; ++i)
+                        {
+                            try
+                            {
+                                int id = Convert.ToInt32(values[i].Trim());
+                                authorInfos.Add(authors[id]);
+                            } catch { }
+                        }
+
+                        books.Add(
+                            identifier++,
+                            new BookInfo
+                            { 
+                                title = values[0].Trim(),
+                                authors = authorInfos.ToArray()
+                            }
+                        );
+                    }
                 }
-            );
-            booksDictionary.Add(
-                identifier++,
-                new BookInfo {
-                    title = "Book2",
-                    authors = new AuthorInfo[] { authors[2], authors[3] }
-                }
-            );
-            booksDictionary.Add(
-                identifier++,
-                new BookInfo {
-                    title = "Book3",
-                    authors = new AuthorInfo[] { authors[4], authors[5] }
-                }
-            );
-            booksDictionary.Add(
-                identifier++,
-                new BookInfo {
-                    title = "Book4",
-                    authors = new AuthorInfo[] { authors[3] }
-                }
-            );
-            booksDictionary.Add(
-                identifier++,
-                new BookInfo {
-                    title = "Book5",
-                    authors = new AuthorInfo[] { authors[1] } 
-                }
-            );
+            }
+            return books;
         }
     }
 }
