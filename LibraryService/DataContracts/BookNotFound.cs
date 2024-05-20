@@ -2,7 +2,7 @@
 
 namespace LibraryService.DataContracts
 {
-    [DataContract]
+    [DataContract(Name = "BookNotFound", Namespace = "")]
     public class BookNotFound
     {
         [DataMember]

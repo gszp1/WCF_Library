@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibraryService.DataContracts
 {
-    [DataContract]
+    [DataContract(Name = "AuthorInfo", Namespace = "")]
     public class AuthorInfo
     {
         [DataMember]

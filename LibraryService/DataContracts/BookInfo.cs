@@ -2,7 +2,7 @@
 
 namespace LibraryService.DataContracts
 {
-    [DataContract]
+    [DataContract(Name = "BookInfo", Namespace = "")]
     public class BookInfo
     {
         [DataMember]
