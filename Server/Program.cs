@@ -37,6 +37,10 @@ namespace Server
                 while(Console.ReadLine().ToLower().Equals("q") == false);
                 host.Close();
             }
+            catch (AddressAlreadyInUseException)
+            {
+                Console.WriteLine("URI is already used!");
+            }
             catch (Exception ex)
             {
                 Console.WriteLine("Error occurred during setup!\nAdditional info: ");
