@@ -84,9 +84,12 @@ namespace Client
 
             // Create proxy.
             var proxy = channel.CreateChannel(endpoint);
-            // Call proxy operation to check if connection was successfully established
-            proxy.GetBookInfo(0);
 
+            // Call proxy operation to check if connection was successfully established
+            try
+            {
+                proxy.GetBookInfo(0);
+            } catch (FaultException<BookNotFound>) { }
             return proxy;
         }
 
@@ -155,7 +158,7 @@ namespace Client
             }
             catch (FaultException<BookNotFound> bookEx)
             {
-                Console.WriteLine(bookEx.Message);
+                Console.WriteLine("Book with given identifier was not found.");
                 return null;
             }
         }
