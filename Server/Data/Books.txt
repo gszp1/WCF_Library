@@ -1,5 +1,0 @@
-﻿book1;0;1
-book2;2;3
-book3;4;5
-book4;3
-book5;1

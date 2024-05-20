@@ -14,6 +14,8 @@ namespace LibraryService
 
         private readonly Dictionary<int, BookInfo> books;
 
+        private readonly string dataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data");
+
         public LibraryServiceImpl()
         {
             books = GetBooks(GetAuthors());
@@ -49,8 +51,7 @@ namespace LibraryService
 
         private List<AuthorInfo> GetAuthors()
         {
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..");
-            filePath = Path.Combine(filePath, "Data", "Authors.txt");
+            string filePath = Path.Combine(dataPath, "Authors.txt");
             List <AuthorInfo> authors = new List<AuthorInfo>();
             using (var reader = new StreamReader(filePath))
             {
@@ -79,8 +80,7 @@ namespace LibraryService
         {
             var books = new Dictionary<int, BookInfo>();
             int identifier = 0;
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..");
-            filePath = Path.Combine(filePath, "Data", "Books.txt");
+            string filePath = Path.Combine(dataPath, "Books.txt");
             using (var reader = new StreamReader(filePath))
             {
                 string line;
