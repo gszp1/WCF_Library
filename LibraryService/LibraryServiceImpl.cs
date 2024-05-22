@@ -23,11 +23,11 @@ namespace LibraryService
 
         public int[] FindBooks(string keyword)
         {
+            Console.WriteLine($"Received query FindBooks for keyword {keyword}");
             if (keyword == null )
             {
                 return new int[0];
             }
-
             return books
                 .Where(book => book.Value.title.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
                 .Select(book => book.Key)
@@ -36,6 +36,7 @@ namespace LibraryService
 
         public BookInfo GetBookInfo(int bookID)
         {
+            Console.WriteLine($"Received query GetBookInfo for id {bookID}");
             if (books.ContainsKey(bookID))
             {
                 return books[bookID];
