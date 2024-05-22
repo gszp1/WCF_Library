@@ -87,10 +87,11 @@ namespace LibraryService
                 while ((line = reader.ReadLine()) != null)
                 {
                     var values = line.Split(';');
-                    if (values.Length >= 1)
+                    if (values.Length >= 2)
                     {
                         List<AuthorInfo> authorInfos = new List<AuthorInfo>();
-                        for (int i = 1; i < values.Length; ++i)
+                        int releaseYear = Convert.ToInt32(values[1].Trim());
+                        for (int i = 2; i < values.Length; ++i)
                         {
                             try
                             {
@@ -104,7 +105,8 @@ namespace LibraryService
                             new BookInfo
                             { 
                                 title = values[0].Trim(),
-                                authors = authorInfos.ToArray()
+                                authors = authorInfos.ToArray(),
+                                year=releaseYear
                             }
                         );
                     }

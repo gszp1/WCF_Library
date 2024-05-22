@@ -10,5 +10,8 @@ namespace LibraryService.DataContracts
 
         [DataMember]
         public AuthorInfo[] authors;
+
+        [DataMember]
+        public int year;
     }
 }

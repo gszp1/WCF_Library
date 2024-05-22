@@ -1,54 +1,54 @@
-﻿book1;0;1
-book2;2;3
-book3;4;5
-book4;3
-book5;1
-Tajemnica jeziora;6;7
-W cieniu drzew;8;9
-Podroz do wnetrza ziemi;10;11
-Nocne niebo;12;13
-Zaklecie wiedzmy;14;15
-Serce miasta;16;17
-Ksiega cieni;18;19
-Ostatnia szansa;20;21
-Miedzy swiatami;22;23
-Kraina lodu;24;25
-Pod skrzydlami aniola;26;27
-Plomien zemsty;28;29
-Wedrowka dusz;30;31
-Na koncu teczy;32;33
-Zloty ptak;34;35
-Cienie przeszlosci;36;37
-Srebrna rzeka;38;39
-Swit nadziei;40;41
-Duchy czasu;42;43
-W labiryncie;44;45
-Gwiezdny pyl;46;47
-Sladami wilka;48;49
-Pustynna burza;50;51
-Przez mgle;52;53
-Zaginione miasta;54;55
-Smocze krolestwo;56;57
-Niebanski ogrod;58;59
-Ogniste skrzydla;60;61
-Po drugiej stronie;62;63
-Cien smoka;64;65
-Krolestwo cieni;66;67
-Zimowa opowiesc;68;69
-Sloneczna dolina;70;71
-Zaginiony skarb;72;73
-Wiosenne przebudzenie;74;75
-Mgielna przystan;76;77
-Dziennik podroznika;78;79
-Tajemnicza wyspa;80;81
-Sny o przyszlosci;82;83
-Skarb Atlantydy;84;85
-Buntownik z wyboru;86;87
-Przeklete miasto;88;89
-Gora tajemnic;90;91
-Lodowa pustynia;92;93
-Blask nadziei;94;95
-Podwodne swiaty;96;97
-Labirynt cieni;98;99
-Nocne wyprawy;100;101
-Legenda o smoku;102;103
+﻿book1;1998;0;1
+book2;2005;2;3
+book3;2010;4;5
+book4;2003;3
+book5;2015;1
+Tajemnica jeziora;2001;6;7
+W cieniu drzew;1996;8;9
+Podroz do wnetrza ziemi;2012;10;11
+Nocne niebo;1999;12;13
+Zaklecie wiedzmy;2007;14;15
+Serce miasta;2018;16;17
+Ksiega cieni;2002;18;19
+Ostatnia szansa;2011;20;21
+Miedzy swiatami;1997;22;23
+Kraina lodu;2019;24;25
+Pod skrzydlami aniola;2000;26;27
+Plomien zemsty;2016;28;29
+Wedrowka dusz;2008;30;31
+Na koncu teczy;1995;32;33
+Zloty ptak;2014;34;35
+Cienie przeszlosci;2004;36;37
+Srebrna rzeka;2017;38;39
+Swit nadziei;2006;40;41
+Duchy czasu;1994;42;43
+W labiryncie;2013;44;45
+Gwiezdny pyl;1991;46;47
+Sladami wilka;2010;48;49
+Pustynna burza;1992;50;51
+Przez mgle;2015;52;53
+Zaginione miasta;1998;54;55
+Smocze krolestwo;2009;56;57
+Niebanski ogrod;2001;58;59
+Ogniste skrzydla;2018;60;61
+Po drugiej stronie;1993;62;63
+Cien smoka;2006;64;65
+Krolestwo cieni;2011;66;67
+Zimowa opowiesc;1999;68;69
+Sloneczna dolina;2005;70;71
+Zaginiony skarb;2012;72;73
+Wiosenne przebudzenie;2014;74;75
+Mgielna przystan;2000;76;77
+Dziennik podroznika;2008;78;79
+Tajemnicza wyspa;1997;80;81
+Sny o przyszlosci;2013;82;83
+Skarb Atlantydy;1994;84;85
+Buntownik z wyboru;2003;86;87
+Przeklete miasto;2010;88;89
+Gora tajemnic;1995;90;91
+Lodowa pustynia;2016;92;93
+Blask nadziei;2002;94;95
+Podwodne swiaty;1996;96;97
+Labirynt cieni;2009;98;99
+Nocne wyprawy;2017;100;101
+Legenda o smoku;2019;102;103

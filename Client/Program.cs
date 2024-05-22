@@ -138,7 +138,7 @@ namespace Client
                 BookInfo bookInformation = proxy.GetBookInfo(identifier);
 
                 // Display book details.
-                Console.WriteLine($"Book details:\nTitle: {bookInformation.title}");
+                Console.WriteLine($"Book details:\nTitle: {bookInformation.title}\nYear: {bookInformation.year}");
                 int counter = 1;
                 foreach (AuthorInfo author in bookInformation.authors)
                 {
