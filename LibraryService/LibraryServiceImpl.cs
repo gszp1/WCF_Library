@@ -23,7 +23,7 @@ namespace LibraryService
 
         public int[] FindBooks(string keyword)
         {
-            if (keyword == null || keyword.Equals("") )
+            if (keyword == null )
             {
                 return new int[0];
             }
